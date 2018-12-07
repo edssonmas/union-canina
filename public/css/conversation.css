@@ -1,0 +1,118 @@
+  #conversacion {
+      background-color: #fff;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: hidden;
+  }
+
+  #header {
+      background-color: white;
+      border-bottom: 1px solid #d9d9d9;
+      margin: 0;
+      width: 100%;
+      height: 50px;
+  }
+
+  #back {
+      background-color: #d9d9d9;
+      float: left;
+      width: 30px;
+      height: 100%;
+      color: white;
+      align-items: center;
+  }
+
+  #back:hover {
+      background-color: #4a4a4a;
+  }
+
+  #back p {
+      position: relative;
+      top: 35%;
+      margin-left: 5px;
+  }
+
+  #usuario {
+      float: left;
+      ;
+      width: auto;
+      padding: 3px;
+      height: 100%;
+  }
+
+  #usuario img {
+      width: 45px;
+      height: 100%;
+      border-radius: 50px;
+      margin-right: 15px;
+  }
+
+  #caja-texto {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: #E6FFFD;
+      border-top: 1px solid #d9d9d9;
+      height: 50px;
+      width: 100%;
+      padding: 5px;
+  }
+
+  #mensajes {
+      width: 100%;
+      background-color: transparent;
+      height: 82%;
+      max-height: 82%;
+      overflow-y: auto;
+      padding: 10px;
+  }
+
+  #mensaje-remitente {
+      display: flex;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 5px;
+  }
+
+  #mensaje-destinatario {
+      display: table;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 5px;
+
+  }
+
+  #mensaje {
+      background-color: #EAEAEA;
+      width: auto;
+      max-width: 70%;
+      padding-left: 15px;
+      padding-right: 10px;
+      padding-top: 7px;
+      padding-bottom: 5px;
+      border-radius: 7px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+  }
+
+  #respuesta {
+      float: right;
+      background-color: #0DACE3;
+      padding-left: 15px;
+      padding-right: 10px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      color: white;
+      width: auto;
+      max-width: 70%;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      border-bottom-left-radius: 25px;
+      margin-bottom: 5px;
+  }
+
+  @media only screen and (max-width: 600px) {}

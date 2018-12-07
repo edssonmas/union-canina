@@ -1,0 +1,129 @@
+#main {
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 7px;
+    height: auto;
+    width: 100%;
+    margin-top: 50px;
+    border: 1px solid #d9d9d9;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#mensajes {
+    height: 550px;
+    padding: 0;
+}
+
+#head {
+    display: flex;
+    background-color: #F3F3F3;
+    height: auto;
+    width: 100%;
+    padding: 8px;
+}
+
+#mascotas {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    max-height: 91%;
+    background-color: transparent;
+    padding: 10px;
+}
+
+.mascota {
+    margin: 0 auto;
+    height: 100px;
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 7px;
+    margin-bottom: 20px;
+}
+
+.mascota img {
+    float: left;
+    margin-right: 10px;
+    width: 100px;
+    height: 100%;
+    border-radius: 7px;
+}
+
+.mascota .info {
+    float: left;
+    height: 100%;
+    width: auto;
+    background-color: transparent;
+    display: contents;
+}
+
+.info a {
+    font-size: 12px;
+    text-decoration: none;
+    color: #a4a4a4;
+}
+
+.info a:hover {
+    color: #2AA5F4;
+}
+
+.mascota .opciones {
+    display: flex;
+    align-items: center;
+    float: right;
+    height: 100%;
+    width: auto;
+    background-color: transparent;
+}
+
+.mascota .opciones p {
+    font-size: 12px;
+    color: #a4a4a4;
+}
+
+.addmascota {
+    font-size: 13px;
+    margin: 10px;
+    float: right;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    margin-bottom: 10px;
+    background-color: #eaeaea;
+    border: none;
+}
+
+p {
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/*Responsive*/
+/*Resolucion XS*/
+@media only screen and (max-width: 600px) {
+    .mascota .opciones p {
+        display: none;
+    }
+}
+
+/*Resolucion SM*/
+@media only screen and (min-width: 600px) {
+    .mascota .opciones p {
+        display: none;
+    }
+}
+
+/*Resolucion MD*/
+@media only screen and (min-width: 768px) {
+    .mascota .opciones p {
+        display: block;
+    }
+}
+
+/*Resolucion LG*/
+@media only screen and (min-width: 992px) {}
