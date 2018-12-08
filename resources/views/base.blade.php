@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
     crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Anton|Merriweather+Sans|Oswald|Roboto" rel="stylesheet">
     @section('titulo')<title>Document</title>@show
@@ -41,8 +41,9 @@
                             <i class="far fa-envelope"></i> Mensajes</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar por codigo #" aria-label="Search">
+                <form class="form-inline my-2 my-lg-0" action=" {{ url('/buscarcodigo') }}" method="post">
+                    {{ csrf_field() }}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar por codigo #" aria-label="Search" name="codigo">
                     <button class="btn btn-primary my-2 my-sm-0 Roboto" type="submit"><i class="fas fa-search"></i> Buscar</button>
                 </form>
             </div>
@@ -65,7 +66,7 @@
             <div class="modal-body" id="mensajes" style="padding:0; margin:0;">
                 {{-- <iframe src="{{ url('pets') }}" style="width:100%; height:100%; border: none; margin: 0;"></iframe>
                 --}}
-                <object data="{{ url('messages') }}" type="" height="100%" width="100%" style="border-bottom-left-radius: 10px; 
+                <object data="{{ url('messages') }}" type="" height="100%" width="100%" style="border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;"></object>
             </div>
         </div>
@@ -76,10 +77,10 @@
     @show
 
     <script src="js/jquery-3.3.1.slim.min.js"></script>
-    <script src="js/jquery.min.js"></script> 
+    <script src="js/jquery.min.js"></script>
     <script src="js/jquery.Jcrop.js"></script>
     <script src="js/backstrech.js"></script>
-    <script src="js/popper.min.js"></script>  
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     @section('scripts')

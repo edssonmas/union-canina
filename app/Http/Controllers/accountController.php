@@ -35,6 +35,7 @@ class accountController extends Controller
         $extravios = Extravio::all()->sortByDesc('f_extrav');
         $mascotas = Usuario::find(Session::get('usuario')->id)->mascotas;
         $conversaciones = Usuario::find(Session::get('usuario')->id)->conversaciones->sortByDesc('fecha_actividad')->values();
+        $ciudades = Ciudad::all();
         $inbox = $this->mensajesNuevos();
         if($inbox)
              session(['inbox' => $inbox]);
@@ -44,6 +45,7 @@ class accountController extends Controller
         session(['extravios' => $extravios]);
         session(['mascotas' => $mascotas]);
         session(['conversaciones' => $conversaciones]);
+        session(['ciudades' => $ciudades]);
 
         session(['vistasPro' => $vistas = [
             'home' => 'account.home',
@@ -410,6 +412,38 @@ class accountController extends Controller
         $extx = collect([$extravios->where('id_mascota',$id)]);
         $mascota->extravios()->delete($extx);
         $mascota->delete();
+        return back();
+    }
+
+    function reporteExtravio(Request $form){
+        $extravio=new Extravio();
+        $extravio->id_mascota=$form->idmasc;
+        $extravio->colonia=$form->colonia;
+        $extravio->id_ciudad=$form->ciudad;
+        $extravio->f_extrav=$form->fecha_ext;
+        $extravio->info_extra=$form->info_ext;
+        $mascota=Mascota::find($form->idmasc);
+        $mascota->estatus="extraviado";
+        $mascota->save();
+        $extravio->save();
+        return redirect('pets');
+    }
+
+    function buscaCodigo(Request $cod){
+        if($cod->codigo!=null){
+            $mascotas= Mascota::all();
+            $extravios=Extravio::all();
+            $codigo=$cod->codigo;
+            $mascotaCod=$mascotas->where('codigo', $codigo)->first();
+            $extravio=$extravios->where('id_mascota', $mascotaCod->id)->first();
+            if($extravio!=null){
+                session(['mascotaCod'=>$mascotaCod]);
+            }
+            return back();
+        }
+    }
+    function cerrarBusqueda(){
+        Session::forget('mascotaCod');
         return back();
     }
 

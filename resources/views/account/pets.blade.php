@@ -89,6 +89,40 @@ $ciudades = Ciudad::all();
         </div>
     </div>
 </div>
+<!-- Modal para reportar-->
+<div class="modal fade" id="reporteMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle"></i> Reporte de Extravío</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-reporte">
+                <form action="{{ url('/reportarExtravio') }}" method="POST">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="idmasc" id="id-masc" value="">
+                    <p>Colonia</p>
+                    <input type="text" class="text-box form-control" name="colonia">
+                    <p>Ciudad</p>
+                    <select name="ciudad" id="ciudad" class="form-control">
+                        @foreach($ciudades as $ciu)
+                        <option value="{{$ciu->id}}">{{$ciu->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <p>Fecha de extravío</p>
+                    <input type="date" name="fecha_ext" class="form-control" placeholder="">
+                    <p>Información Extra</p>
+                    <input type="text" class="text-box form-control" name="info_ext">
+                    <button type="submit" class="btn btn-danger btn-guardar btn-block">Reportar</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="container">
     <div id="main">
         <div id="head">
@@ -114,7 +148,8 @@ $ciudades = Ciudad::all();
                         @endif
                     </h5>
                     <a href="{{ url('editarmascota/'.$mascota->id.'') }}">Editar mascota</a>
-                    <a href="">Reportar como extraviado</a>
+                    <a id="mascota" class="extravioPerro" href="" data-toggle="modal" data-target="#reporteMascota" data-mascota="{{ $mascota->id }}">
+                        Reportar como extraviado</a>
                     <a href="{{ url('eliminarmascota/'.$mascota->id.'') }}">Eliminar</a>
                 </div>
                 <div class="opciones ">
@@ -139,6 +174,14 @@ $ciudades = Ciudad::all();
 
         $('.nav-item:nth-child(1)').removeClass('active-nav'); //Se borra la clase del que ya tenia el active
         $('.nav-item:nth-child(1) > a').removeAttr('id').attr('id', 'menu-link');
+
+
+
+        let botonExtravio=$('#a.extravioPerro');
+        $('a.extravioPerro').click(function (e){
+            let idMascota=$(this).data('mascota');
+            $("#id-masc").val(idMascota);
+        });
     })
 
 </script>

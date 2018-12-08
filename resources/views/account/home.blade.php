@@ -9,11 +9,15 @@
 @php
 use App\Modelos\Usuario;
 use App\Modelos\Raza;
+use App\Modelos\Ciudad;
 $usuario = Session::get('usuario');
 $extravios = Session::get('extravios');
 $conversaciones = Session::get('conversaciones');
 $mascotas = Session::get('mascotas');
 $razas = Raza::all();
+$mascotaCod = Session::get('mascotaCod');
+$ciudades=Session::get('ciudades');
+$mascotas=Session::get('mascotas');
 @endphp
 
 @section('contenido')
@@ -117,6 +121,53 @@ $razas = Raza::all();
         </div>
     </div>
 </div>
+<!--Modal para registrar extravio -->
+<div class="modal fade" id="reporteExtravio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color:#80B2D8 ">
+              <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-exclamation-triangle"></i><strong> Reporte de Extravío</strong></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" >
+                <div class="form-reporte">
+                    <form action="{{ url('/reportarExtravio') }}" method="POST">
+                        {{ csrf_field() }}
+                        <p>Perro</p>
+                        <select  style="background-color: #EAEAEA;" class="form-control" id="idmasc" name="idmasc" data-toggle="tooltip" data-placement="right" title="Elija el perro extraviado">
+
+                            @foreach($mascotas as $mas)
+                            @if($mas->estatus=='en casa')<option value="" disabled selected hidden>Selecciona a tu perro</option>
+                            <option value="{{$mas->id}}">{{$mas->nombre}}</option>
+                            @else
+
+                            @endif
+                            @endforeach
+                        </select>
+
+                        <p>Colonia</p>
+                        <input type="text" class="text-box" name="colonia" placeholder="Se perdió en ...">
+                        <p>Ciudad</p>
+                        <select name="ciudad" id="ciudad" class="form-control" style="background-color: #eaeaea;">
+                            @foreach ($ciudades as $ciudad)
+                                <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <p>Fecha de extravío</p>
+                        <input type="date" name="fecha_ext" class="form-control" placeholder="" style="background-color: #eaeaea;">
+                        <p>Información Extra</p>
+                        <input type="text" class="text-box" name="info_ext" placeholder="información extra">
+                        <button type="submit" class="btn btn-danger btn-guardar">Reportar</button>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!----------------------------------------------------------------------->
 
 <div class="container-fluid">
     <div id="main">
@@ -154,6 +205,72 @@ $razas = Raza::all();
                 <div class="col-sm-12 col-md-12 col-lg-6 noPad-noMarg">
                     <div id="center">
                         <div class="container noPad-noMarg">
+                                @if (Session::has('mascotaCod'))
+                                <div class="alert alert-info" role="alert">
+                                        <b>Resultado de la busqueda</b> <a href="cerrarBusqueda" class="float-right"><i class="fas fa-times"></i></a>
+                                </div>
+                                <div class="row card-media">
+                                    <!-- media container -->
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 card-media-object-container noPad-noMarg">
+                                        <div class="card-media-object" style="background-image: url({{ '/pppic/' . $mascotaCod->foto }})"></div>
+                                        <ul class="card-media-object-social-list">
+                                            <li>
+                                                <img src="{{ '/imagen/'. $mascotaCod->usuario->foto }}" class="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- body container -->
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 card-media-body noPad-noMarg">
+                                        <div class="card-media-body-top" style="margin-bottom:0;">
+                                            <span class="subtle"><i class="far fa-clock"></i> {{ $mascotaCod->extravios->last()->f_extrav }}</span>
+                                            <div class="card-media-body-top-icons u-float-right">
+                                                <span class="badge badge-success">{{ $mascotaCod->nombre }}</span>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:0; max-width: 90%; overflow-y: auto;">
+                                            <span class="card-media-body-heading" style="margin-top:1px; float:left;">
+                                                <p style="font-size:11px;">
+                                                    Raza: {{ $mascotaCod->raza->nombre }} <br>
+                                                    Color: {{ $mascotaCod->color }} <br>
+                                                    <a href=""><i class="fas fa-info-circle"></i> Más informacion</a>
+                                                </p>
+                                            </span>
+                                            @forelse ($mascotaCod->fotografias as $foto)
+
+                                                    <div class="foto" data-foto="{{ $foto }}" data-toggle="modal" data-target="#verminiatura">
+                                                        <img src="{{ '/petpic/'.$foto->foto }}" alt="">
+                                                    </div>
+
+                                            @empty
+                                                <p style="color:#d9d9d9;font-size:12px; float:right; margin-top: 10px;">
+                                                    <i class="far fa-images"></i> No hay fotografías</p>
+                                            @endforelse
+                                        </div>
+                                        <div class="card-media-body-supporting-bottom">
+                                            <span class="card-media-body-supporting-bottom-text subtle">
+                                                <i class="fas fa-map-marked-alt"></i> {{ $mascotaCod->extravios->last()->ciudad->nombre .', '.
+                                                $mascotaCod->extravios->last()->colonia }}
+                                            </span>
+                                            <span class="card-media-body-supporting-bottom-text subtle u-float-right">
+                                                <i class="far fa-arrow-alt-circle-right"></i>
+                                            </span>
+                                        </div>
+                                        <div class="card-media-body-supporting-bottom card-media-body-supporting-bottom-reveal">
+                                            <span class="card-media-body-supporting-bottom-text subtle" style="margin-top:5px;">
+                                                <i class="fas fa-user"></i> Dueño: {{ $mascotaCod->usuario->nombre
+                                                .'
+                                                '.$mascotaCod->usuario->apat }}
+                                            </span>
+                                            <a href="#/" style="text-decoration: none;" onclick="pasarID({{ $mascotaCod->id_usuario }})"
+                                                data-toggle="modal" data-target="#contactarModal" class="card-media-body-supporting-bottom-text card-media-link u-float-right">
+                                                <i class="fas fa-comment"></i> Contactar al dueño
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                @endif
                             @foreach ($extravios as $extravio)
                             <div class="row card-media">
                                 <!-- media container -->
@@ -230,7 +347,7 @@ $razas = Raza::all();
                             <hr>
                             <button href="" type="submit" class="btn btn-outline-info hvr-buzz-out" style="width:100%; margin-bottom:10px;">
                                 <i class="fas fa-dog float-left"></i> Registrar mascota</button>
-                            <button href="" type="submit" class="btn btn-danger hvr-buzz-out" style="width:100%; margin-bottom:10px;">
+                            <button href="" type="submit" class="btn btn-danger hvr-buzz-out" style="width:100%; margin-bottom:10px;" data-target="#reporteExtravio" data-toggle="modal" >
                                 <i class="fas fa-exclamation-triangle float-left"></i> Reportar extravío</button>
 
                             <form action="{{ url('cerrar') }}" method="get">
