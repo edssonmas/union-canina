@@ -19,7 +19,7 @@ $ciudades = Ciudad::all();
 @endphp
 @section('contenido')
 <!-- Modal para registrar -->
-<div class="modal fade" id="regmascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade animated fadein" id="regmascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,7 +90,7 @@ $ciudades = Ciudad::all();
     </div>
 </div>
 <!-- Modal para reportar-->
-<div class="modal fade" id="reporteMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade animated fadein" id="reporteMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="overflow-y:hidden;">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -148,12 +148,20 @@ $ciudades = Ciudad::all();
                         @endif
                     </h5>
                     <a href="{{ url('editarmascota/'.$mascota->id.'') }}">Editar mascota</a>
+                    @if ($mascota->estatus == 'en casa')
                     <a id="mascota" class="extravioPerro" href="" data-toggle="modal" data-target="#reporteMascota" data-mascota="{{ $mascota->id }}">
                         Reportar como extraviado</a>
+                    @else
+                    <form action="reportarEncontrado" method="post" name="encontrado{{ $mascota->id }}" style="display: inline-block;">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="idmas" value="{{ $mascota->id }}">
+                        <a id="mascota" class="extravioPerro" href="" onclick='document.forms["encontrado{{ $mascota->id }}"].submit(); return false;'>Reportar como encontrado</a>
+                    </form>
+                    @endif
                     <a href="{{ url('eliminarmascota/'.$mascota->id.'') }}">Eliminar</a>
                 </div>
                 <div class="opciones ">
-                    <p><b>Codigo:</b> AKL02MNU498ZV203PLYU41</p>
+                    <p><b>Codigo:</b> {{ $mascota->codigo->codigo }}</p>
                 </div>
             </div>
             <hr>

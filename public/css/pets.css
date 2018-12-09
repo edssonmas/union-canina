@@ -69,7 +69,6 @@
 }
 
 .mascota .opciones {
-    display: flex;
     align-items: center;
     float: right;
     height: 100%;
@@ -126,4 +125,8 @@ p {
 }
 
 /*Resolucion LG*/
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+    .mascota .opciones {
+        display: inherit;
+    }
+}

@@ -22,7 +22,7 @@ $mascotas=Session::get('mascotas');
 
 @section('contenido')
 <!-- Modal para Editar informacion del usuario-->
-<div class="modal fade" id="edit-perfil" tabindex="-1" role="dialog" aria-labelledby="m_editar" aria-hidden="true">
+<div class="modal fade animated bounceIn" id="edit-perfil" tabindex="-1" role="dialog" aria-labelledby="m_editar" aria-hidden="true" style="overflow-y:hidden;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,7 +57,7 @@ $mascotas=Session::get('mascotas');
     </div>
 </div>
 <!-- Contactar Modal -->
-<div class="modal fade" id="contactarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade animated fadein" id="contactarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="overflow-y:hidden;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -79,8 +79,8 @@ $mascotas=Session::get('mascotas');
     </div>
 </div>
 <!--Modal para recortar foto de perfil-->
-<div class="modal fade" id="cut_foto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style=" text-align: center; padding: 0 !important;">
+<div class="modal fade animated fadein" id="cut_foto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style=" text-align: center; padding: 0 !important; overflow-y: hidden;">
     <div class="modal-dialog" role="document" style="display:inline-table">
         <div class="modal-content" style="height: auto; width: max-content;">
             <div class="modal-header">
@@ -110,8 +110,8 @@ $mascotas=Session::get('mascotas');
     </div>
 </div>
 <!--Modal para ver foto de mascota-->
-<div class="modal fade" id="verminiatura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style=" text-align: center; padding: 0 !important;">
+<div class="modal fade animated fadein" id="verminiatura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style=" text-align: center; padding: 0 !important; overflow-y:hidden;">
     <div class="modal-dialog" role="document" style="display:inline-table">
         <div class="modal-content" style="height: auto; width: max-content; background-color: transparent; border:none;">
             <div class="modal-body" style="padding: 0; margin: 0; width: auto; height: auto;">
@@ -122,7 +122,7 @@ $mascotas=Session::get('mascotas');
     </div>
 </div>
 <!--Modal para registrar extravio -->
-<div class="modal fade" id="reporteExtravio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade animated fadein" id="reporteExtravio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="overflow-y:hidden;">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header" style="background-color:#80B2D8 ">
@@ -205,6 +205,11 @@ $mascotas=Session::get('mascotas');
                 <div class="col-sm-12 col-md-12 col-lg-6 noPad-noMarg">
                     <div id="center">
                         <div class="container noPad-noMarg">
+                                @if (Session::has('noencontrado'))
+                                <div class="alert alert-danger" role="alert">
+                                        <b>{{ Session::get('noencontrado') }}</b> <a href="cerrarBusqueda" class="float-right"><i class="fas fa-times"></i></a>
+                                </div>
+                                @endif
                                 @if (Session::has('mascotaCod'))
                                 <div class="alert alert-info" role="alert">
                                         <b>Resultado de la busqueda</b> <a href="cerrarBusqueda" class="float-right"><i class="fas fa-times"></i></a>

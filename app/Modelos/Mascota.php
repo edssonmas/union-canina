@@ -9,7 +9,7 @@ class Mascota extends Model
      protected $table = 'mascotas';
      protected $primaryKey='id';
      public $timestamps = false;
-     
+
      public function raza(){
          return $this->belongsTo(Raza::class, 'id_raza','id');
      }
@@ -25,4 +25,7 @@ class Mascota extends Model
      public function fotografias(){
          return $this->hasMany(Fotografia::class, 'id_mascota','id');
      }
+     public function codigo(){
+        return $this->hasOne(Codigo::class,'id_mascota','id');
+    }
 }

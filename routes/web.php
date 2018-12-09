@@ -20,7 +20,8 @@ Route::get('editarmascota/{id}','accountController@editarmascota');
 
 Route::post('/reportarExtravio', 'accountController@reporteExtravio'); //reportar extravio de mascota desde 'Mascotas'
 Route::post('/buscarcodigo', 'accountController@buscaCodigo'); //buscar por codigo
-Route::get('cerrarBusqueda','\App\Http\Controllers\accountController@cerrarBusqueda');
+Route::get('cerrarBusqueda','\App\Http\Controllers\accountController@cerrarBusqueda'); //borrar variable de sesion de perro encontrado por codigo
+Route::post('reportarEncontrado','\App\Http\Controllers\accountController@RepEncontrado'); //reportar como encontrado
 
 Route::post('/cutpic', "accountController@cut_foto"); //recortar foto
 Route::get('conversacion/{id}','accountController@verConversacion'); //Ver conversacion

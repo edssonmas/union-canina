@@ -11,6 +11,6 @@ class Raza extends Model
      public $timestamps = false;
 
      public function mascota(){
-         return $this->hasOne(Mascota::class,'id_raza','id');
+         return $this->hasMany(Mascota::class,'id_raza','id');
      }
 }

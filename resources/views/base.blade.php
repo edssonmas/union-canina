@@ -44,7 +44,7 @@
                 <form class="form-inline my-2 my-lg-0" action=" {{ url('/buscarcodigo') }}" method="post">
                     {{ csrf_field() }}
                     <input class="form-control mr-sm-2" type="search" placeholder="Buscar por codigo #" aria-label="Search" name="codigo">
-                    <button class="btn btn-primary my-2 my-sm-0 Roboto" type="submit"><i class="fas fa-search"></i> Buscar</button>
+                    <button class="btn btn-primary my-2 my-sm-0 Roboto" type="submit"><i class="fas fa-search"></i> putote</button>
                 </form>
             </div>
             <a class="navbar-brand hint--bottom hint--rounded hint--bounce" aria-label="Inicio" href="#">

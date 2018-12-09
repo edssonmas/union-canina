@@ -13,6 +13,7 @@ use App\Modelos\Conversacion;
 use App\Modelos\Ciudad;
 use App\Modelos\Pais;
 use App\Modelos\Fotografia;
+use App\Modelos\Codigo;
 
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
@@ -32,7 +33,7 @@ class accountController extends Controller
         return view(Session::get('vistasPu')[$vista]);
     }
     function vistasProtegidas($vista){
-        $extravios = Extravio::all()->sortByDesc('f_extrav');
+        $extravios = Extravio::where("estado","=","extraviado")->get()->sortByDesc('f_extrav');
         $mascotas = Usuario::find(Session::get('usuario')->id)->mascotas;
         $conversaciones = Usuario::find(Session::get('usuario')->id)->conversaciones->sortByDesc('fecha_actividad')->values();
         $ciudades = Ciudad::all();
@@ -431,19 +432,25 @@ class accountController extends Controller
 
     function buscaCodigo(Request $cod){
         if($cod->codigo!=null){
-            $mascotas= Mascota::all();
+            // $mascotas= Mascota::all();
             $extravios=Extravio::all();
             $codigo=$cod->codigo;
-            $mascotaCod=$mascotas->where('codigo', $codigo)->first();
-            $extravio=$extravios->where('id_mascota', $mascotaCod->id)->first();
-            if($extravio!=null){
-                session(['mascotaCod'=>$mascotaCod]);
+            $codigo = Codigo::where("codigo","=",$codigo)->first();
+            if($codigo){
+                $mascotaCod= Mascota::find($codigo->id_mascota);
+                $extravio=$extravios->where('id_mascota', $mascotaCod->id)->first();
+                if($extravio!=null){
+                    session(['mascotaCod'=>$mascotaCod]);
+                }
+                return redirect('/home');
             }
+            session(['noencontrado'=> "No hay hubo resultados"]);
             return back();
         }
     }
     function cerrarBusqueda(){
         Session::forget('mascotaCod');
+        Session::forget('noencontrado');
         return back();
     }
 
@@ -452,4 +459,13 @@ class accountController extends Controller
       return $mascota->fotografias[0]->mascota;
     }
 
+    function RepEncontrado(Request $form){
+        $mascota = Mascota::find($form->idmas);
+        $mascota->estatus = "en casa";
+        $mascota->extravios->last()->estado = "encontrado";
+        $mascota->extravios->last()->save();
+        $mascota->save();
+        return back();
+
+    }
 }

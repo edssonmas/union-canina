@@ -37,6 +37,9 @@
     margin: 0;
 }
 
+.modal{
+    overflow-y: hidden;
+}
 /*FILTRO*/
 #filtros {
     background-color: white;
